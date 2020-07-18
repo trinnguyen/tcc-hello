@@ -17,8 +17,19 @@ Toy compiler for (subset) C, target x64 macOS and Linux
 - The compiler is developed in C
 
 
-### Related works
-- A series blog posts following the same approach but using OCaml and targeting x86: https://norasandler.com/2017/11/29/Write-a-Compiler.html
+## Usage
+```
+tcc - A toy C compiler for ANSI C
+
+USAGE:
+    tcc [options] filename ...
+    Options:
+        -o <name>  Output filename. Default is a.out
+        -h         Show this help information
+        -v         Verbose output
+EXAMPLE:
+    tcc hello.c
+```
 
 ## Incremental steps
 
@@ -66,3 +77,7 @@ _main:
 	ret
 	.cfi_endproc
 ```
+
+### Related works
+- An Incremental Approach to Compiler Construction: http://scheme2006.cs.uchicago.edu/11-ghuloum.pdf
+- A series blog posts following the same approach but using OCaml and targeting x86: https://norasandler.com/2017/11/29/Write-a-Compiler.html

@@ -83,7 +83,7 @@ static void show_help() {
     printf("USAGE:\n");
     printf("\ttcc [options] filename ...\n");
     printf("\tOptions:\n");
-    printf("\t\t-o <name>  Show this help information\n");
+    printf("\t\t-o <name>  Output filename. Default is a.out\n");
     printf("\t\t-h         Show this help information\n");
     printf("\t\t-v         Verbose output\n");
 
