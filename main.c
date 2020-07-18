@@ -3,11 +3,12 @@
 
 #include "util.h"
 #include "lexer.h"
+#include "scanner.h"
 
 static void show_help();
-static void exec_compiler(const char* filename);
+static bool exec_compiler(const char* filename);
 
-static bool verbose_enabled;
+bool opt_verbose_enabled;
 
 int main(int argc, char const *argv[]) {
     // error -> show help
@@ -18,7 +19,7 @@ int main(int argc, char const *argv[]) {
     }
 
     // simple way to parse the options and input files
-    char *file;
+    const char *file;
     for (size_t i = 1; i < argc; i++) {
         // option
         char const *cur = argv[i];
@@ -29,7 +30,7 @@ int main(int argc, char const *argv[]) {
             }
 
             if (is_str_equals(cur, "-v")) {
-                verbose_enabled = true;
+                opt_verbose_enabled = true;
             }
         } else {
             // file
@@ -38,9 +39,10 @@ int main(int argc, char const *argv[]) {
     }
     
     // invoke process
-    exec_compiler(file);
+    if (exec_compiler(file))
+        return 0;
 
-    return 0;
+    return 1;
 }
 
 static void show_help() {
@@ -61,56 +63,21 @@ static void show_help() {
  * invoke compiler process:
  * lexer -> parser -> code generator (asm) -> assembler (nasm) -> linker (GNU ld)
  */
-static void exec_compiler(const char* filename) {
+static bool exec_compiler(const char* filename) {
     // open file
-    FILE *f = fopen(filename, "r");
+    FILE *f = fopen(filename, "r");    
 
-    int t = -1;
-    // run lexer
-    if (verbose_enabled)
-        info("---- Lexer\n");
-        
-    while ((t = get_token(f)) != TOK_EOF) {
-        if (verbose_enabled) {
-            switch (t) {
-                case TOK_IDENTIFIER:
-                    printf("Identifier: %s\n", identifier_str);
-                    break;
-                case TOK_INT:
-                    printf("Keyword: int\n");
-                    break;
-                case TOK_RETURN:
-                    printf("Keyword: return\n");
-                    break;
-                case TOK_NUM:
-                    printf("Number: %d\n", int_val);
-                    break;
-                case TOK_SEMI_COLON:
-                    printf(";\n");
-                    break;
-                case TOK_OPEN_PARENT:
-                    printf("(\n");
-                    break;
-                case TOK_CLOSE_PARENT:
-                    printf(")\n");
-                    break;
-                case TOK_OPEN_BRACKET:
-                    printf("{\n");
-                    break;
-                case TOK_CLOSE_BRACKET:
-                    printf("}\n");
-                    break;
-                case TOK_EOF:
-                    printf("End of file\n");
-                    break;
-                default:
-                    printf("Unexpected token\n: %c", t);
-                    break;
-            }
-        }
-    }
-    
+    // scan
+    ast_prog *ast = scan(f);
 
     // close
     fclose(f);
+    if (ast != NULL) {
+        print_ast(ast);
+        free_ast(ast);
+        return true;
+    } else {
+        fprintf(stderr, "Failed to parse the source code\n");
+        return false;
+    }
 }

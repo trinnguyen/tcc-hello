@@ -4,4 +4,4 @@ cmake_minimum_required(VERSION 3.10)
 project(tcc)
 
 # add the executable
-add_executable(tcc main.c util.c lexer.c lexer.h)
+add_executable(tcc main.c util.c lexer.c scanner.c list.c)

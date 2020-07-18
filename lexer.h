@@ -1,9 +1,12 @@
+#include <stdio.h>
+
 // Token type
 typedef enum {
     TOK_IDENTIFIER = 1,
 
     // keywords
     TOK_INT = 2,
+    TOK_VOID = 11,
     TOK_RETURN = 3,
 
     // symbols
@@ -20,8 +23,10 @@ typedef enum {
     TOK_EOF = 10
 } token_type;
 
-extern char identifier_str[256];
+extern char lex_id_str[256];
 
-extern double int_val;
+extern int lex_int_val;
 
 int get_token(FILE *f);
+
+const char *token_name(int t);

@@ -6,9 +6,9 @@
 #include "lexer.h"
 #include "util.h"
 
-char identifier_str[256];
+char lex_id_str[256];
 
-double int_val;
+int lex_int_val;
 
 static bool is_letter_digit(char c) {
     return isalnum(c) || c == '_';
@@ -23,24 +23,24 @@ int get_token(FILE *f) {
 
     // start with keywords/identifiers
     if (isalpha(c) || c == '_') {
-        reset_str(identifier_str);
+        reset_str(lex_id_str);
 
         int idx = 0;
-        identifier_str [idx ++] = c;
+        lex_id_str [idx ++] = c;
         while (is_letter_digit(c = fgetc(f))) {
-            identifier_str [idx ++] = c;
+            lex_id_str [idx ++] = c;
         }
 
         // check keywords
-        if (is_str_equals(identifier_str, "int")) {
+        if (is_str_equals(lex_id_str, "int")) {
             return TOK_INT;
         }
 
-        if (is_str_equals(identifier_str, "return")) {
+        if (is_str_equals(lex_id_str, "return")) {
             return TOK_RETURN;
         }
 
-        // return id with val in identifier_str
+        // return id with val in lex_id_str
         return TOK_IDENTIFIER;
     }
 
@@ -54,7 +54,7 @@ int get_token(FILE *f) {
         }
 
         // parse
-        int_val = atoi(str_num);
+        lex_int_val = atoi(str_num);
         return TOK_NUM;
     }
 
@@ -81,4 +81,33 @@ int get_token(FILE *f) {
 
     c = fgetc(f);
     return t;
+}
+
+const char *token_name(int t) {
+    switch (t) {
+        case TOK_IDENTIFIER:
+            return "identifier";
+        case TOK_INT:
+            return "int";
+        case TOK_RETURN:
+            return "return";
+        case TOK_NUM:
+            return "number";
+        case TOK_SEMI_COLON:
+            return ";";
+        case TOK_OPEN_PARENT:
+            return "(";
+        case TOK_CLOSE_PARENT:
+            return ")";
+        case TOK_OPEN_BRACKET:
+            return "{";
+        case TOK_CLOSE_BRACKET:
+            return "}";
+            break;
+        case TOK_EOF:
+            return "EOF";
+            break;
+        default:
+            return "";
+    }
 }

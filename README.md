@@ -16,7 +16,7 @@ Toy compiler for (subset) C, target x64 macOS and Linux
 ### Related works
 - A series blog posts following the same approach but using OCaml and targeting x86: https://norasandler.com/2017/11/29/Write-a-Compiler.html
 
-## 24 Steps
+## Incremental steps
 
 ### Step 1. Integers
 - Goals
@@ -29,8 +29,8 @@ Toy compiler for (subset) C, target x64 macOS and Linux
 - EBNF Grammar
 
 ```
-<prog>          := <function-decl>+
-<function-decl> := 'int' <id> '(' ')' '{' <statement>* '}'
+<prog>          := <func-decl>+
+<func-decl>     := 'int' <id> '(' ')' '{' <statement>* '}'
 <id>            := (letter | '_') (<letter> | '_' | <digit>)*
 <letter>        := [a-zA-Z]
 <digit>         := [0-9]
