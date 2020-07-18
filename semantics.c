@@ -1,4 +1,6 @@
 #include <string.h>
+
+#include "util.h"
 #include "semantics.h"
 
 bool validate_function(node_func_decl *decl) {
@@ -38,7 +40,7 @@ bool validate_functions(linked_list *decls) {
     while (node != NULL) {
         node_func_decl *decl = node->value;
 
-        if (strcmp(decl->name, "main") == 0) {
+        if (is_str_equals(decl->name, "main")) {
             has_main = true;
         }
 

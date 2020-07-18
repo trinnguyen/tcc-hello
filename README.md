@@ -4,9 +4,13 @@ Toy compiler for (subset) C, target x64 macOS and Linux
 ## Overview
 
 - Implement my own compiler for (subset) C language
-- Hand-written all phases from scanner to code generation
+- Hand-written all phases from scanning to code generation
+    + Simple lexer
+    + Recursive descent parser to AST
+    + Generate x64 assembly code (Intel syntax) from AST
+    + Invoke system assembler (as)
+    + Invoke system linker (ld)
 - Generate executable file (machine code) for Linux/macOS
-- Invoke assembler, linker
 - Usage of x64 assembly language (Intel syntax) and NASM assembler
 - Follow the methodology in paper "An Incremental Approach to Compiler Construction"
 - Use ANSI C grammar from the book ["C Programming Language, 2nd Edition"](https://www.pearson.com/us/higher-education/program/Kernighan-C-Programming-Language-2nd-Edition/PGM54487.html)
@@ -53,7 +57,6 @@ Lexer -> Parser -> Semantics Analyzer -> Assembly code generator -> Assembler ->
 
 - Sample assembly code:
 ```s
-# use with GNU as
 .section	__TEXT,__text
 	.intel_syntax
 	.globl	_main

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "util.h"
 
@@ -23,4 +24,10 @@ void reset_str(char *str) {
 
 bool is_str_equals(const char *str1, const char *str2) {
     return strcmp(str1, str2) == 0;
+}
+
+bool exec_cmd(const char *cmd) {
+    printf("\tExecute command: %s\n", cmd);
+    int res = system(cmd);
+    return res == 0;
 }
