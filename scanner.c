@@ -43,6 +43,8 @@ static bool consume(int tok) {
 static void free_node_stmt(void *pt) {
     if (pt != NULL) {
         node_stmt *stmt = (node_stmt *)pt;
+
+        free(pt);
     }
 }
 
@@ -152,13 +154,7 @@ node_func_decl *parse_function() {
     }
 
     // parse stmts
-    linked_list *stmts = parse_stmts();
-    if (stmts == NULL) {
-        free_func_decl(decl);
-        return NULL;
-    }
-
-    decl->func_stmts = stmts;
+    decl->func_stmts = parse_stmts();
 
     // close
     if (!consume(TOK_CLOSE_BRACKET)) {
@@ -239,7 +235,7 @@ static void print_stmt(node_stmt *stmt) {
     printf("<statement>:\n");
     switch (stmt->stmt_type) {
         case stmt_type_return:
-            printf("\t return: %d", stmt->return_exprr.const_int);
+            printf("\t return: %d\n", stmt->return_exprr.const_int);
             break;
         default:
             break;

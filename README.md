@@ -39,10 +39,27 @@ Toy compiler for (subset) C, target x64 macOS and Linux
 ```
 
 - Input: `int1.c`
-```
+```c
 int main() {
     return 1;
 }
 ```
 
 - Output: `int1` on macOS and Linux (Fedora)
+
+- Phases:
+
+Lexer -> Parser -> Semantics Analyzer -> Assembly code generator -> Assembler -> Linker
+
+- Sample assembly code:
+```s
+# use with GNU as
+.section	__TEXT,__text
+	.intel_syntax
+	.globl	_main
+_main:
+	.cfi_startproc
+	mov	eax, 1
+	ret
+	.cfi_endproc
+```

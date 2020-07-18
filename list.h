@@ -1,3 +1,6 @@
+#ifndef _LIST_
+#define _LIST_
+
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -21,3 +24,5 @@ bool list_is_empty(linked_list *list);
 void list_append(linked_list *list, void *val);
 
 void list_free(linked_list *list);
+
+#endif

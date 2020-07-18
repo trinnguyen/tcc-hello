@@ -4,6 +4,8 @@
 #include "util.h"
 #include "lexer.h"
 #include "scanner.h"
+#include "semantics.h"
+#include "codegen.h"
 
 static void show_help();
 static bool exec_compiler(const char* filename);
@@ -65,19 +67,38 @@ static void show_help() {
  */
 static bool exec_compiler(const char* filename) {
     // open file
-    FILE *f = fopen(filename, "r");    
+    FILE *f = fopen(filename, "r");
 
     // scan
     ast_prog *ast = scan(f);
+    fclose(f);
+    f = NULL;
 
     // close
-    fclose(f);
-    if (ast != NULL) {
-        print_ast(ast);
-        free_ast(ast);
-        return true;
-    } else {
+    if (ast == NULL) {
         fprintf(stderr, "Failed to parse the source code\n");
         return false;
     }
+    print_ast(ast);
+
+    // semantics
+    if (!validate(ast)) {
+        free_ast(ast);
+        return false;
+    }
+
+    // codegen
+    const char *asm_name = "a.out.asm";
+    FILE *fout = fopen(asm_name, "w");
+    bool gen = generate_asm(ast, fout);
+    if (gen) {
+        printf("Generate ASM into: %s\n", asm_name);
+    }
+
+    fclose(fout);
+    fout = NULL;
+
+    // finish
+    free_ast(ast);
+    return gen;
 }

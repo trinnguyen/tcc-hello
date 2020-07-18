@@ -1,3 +1,6 @@
+#ifndef _INTERN_
+#define _INTERN_
+
 #include "list.h"
 
 typedef enum {
@@ -38,3 +41,5 @@ typedef struct {
 } ast_prog;
 
 extern bool opt_verbose_enabled;
+
+#endif
