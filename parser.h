@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "intern.h"
 
-ast_prog *scan(FILE *f);
+ast_prog *parse(FILE *f);
 
 void print_ast(ast_prog *ast);
 

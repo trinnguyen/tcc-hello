@@ -3,7 +3,7 @@
 
 #include "util.h"
 #include "lexer.h"
-#include "scanner.h"
+#include "parser.h"
 #include "semantics.h"
 #include "codegen.h"
 
@@ -70,7 +70,7 @@ static bool exec_compiler(const char* filename) {
     FILE *f = fopen(filename, "r");
 
     // scan
-    ast_prog *ast = scan(f);
+    ast_prog *ast = parse(f);
     fclose(f);
     f = NULL;
 
@@ -79,7 +79,10 @@ static bool exec_compiler(const char* filename) {
         fprintf(stderr, "Failed to parse the source code\n");
         return false;
     }
-    print_ast(ast);
+
+    // print parser if need
+    if (opt_verbose_enabled)
+        print_ast(ast);
 
     // semantics
     if (!validate(ast)) {

@@ -4,8 +4,7 @@
 
 #include "lexer.h"
 #include "util.h"
-
-#include "scanner.h"
+#include "parser.h"
 
 static void print_token(int t);
 
@@ -184,7 +183,7 @@ linked_list *parse_functions() {
     return list;
 }
 
-ast_prog *scan(FILE *f) {
+ast_prog *parse(FILE *f) {
     if (opt_verbose_enabled)
         info("---- Scanner\n");
 
