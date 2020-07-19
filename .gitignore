@@ -57,3 +57,4 @@ build
 
 # Custom
 *.s
+src-gen/

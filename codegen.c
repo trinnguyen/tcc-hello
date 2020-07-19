@@ -4,8 +4,8 @@
 FILE *cfout;
 
 static void gen_header() {
-    fprintf(cfout, ".section	__TEXT,__text\n");
-    fprintf(cfout, "	.intel_syntax\n");
+    fprintf(cfout, "    global  _main\n");
+    fprintf(cfout, "    section .text\n\n");
 }
 
 static void gen_expr(node_expr expr) {
@@ -28,11 +28,7 @@ static void gen_stmt(node_stmt *stmt) {
 
 static void gen_func(node_func_decl *decl) {
     // labe;
-    fprintf(cfout, "	.globl	_%s\n", decl->name);
     fprintf(cfout, "_%s:\n", decl->name);
-
-    // GNU as start
- 	fprintf(cfout, "	.cfi_startproc\n");
 
     // statement
     if (decl->func_stmts != NULL) {
@@ -42,9 +38,6 @@ static void gen_func(node_func_decl *decl) {
             node = node->next;
         }
     }
-
-    // GNU as end
-    fprintf(cfout, "	.cfi_endproc\n");   
 }
 
 bool generate_asm(ast_prog *ast, FILE *fout) {

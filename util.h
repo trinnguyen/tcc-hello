@@ -8,4 +8,4 @@ void reset_str(char *str);
 
 bool is_str_equals(const char *str1, const char *str2);
 
-bool exec_cmd(const char *cmd);
+bool exec_cmd(const char *cmd, const char *args);

@@ -122,13 +122,13 @@ static bool exec_compiler(const char* filename, const char *output) {
 
     // codegen
     char asm_name[256];
-    snprintf(asm_name, 256, "%s.s", output);
+    snprintf(asm_name, 256, "%s.asm", output);
     FILE *fout = fopen(asm_name, "w");
     bool gen = generate_asm(ast, fout);
     free_ast(ast);
 
     if (gen) {
-        printf("Generate ASM into: %s\n", asm_name);
+        printf("Generate assembly code from AST into: %s\n", asm_name);
     } else {
         error("Failed to generate ASM\n");
         return false;

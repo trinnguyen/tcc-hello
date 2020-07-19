@@ -31,6 +31,10 @@ EXAMPLE:
     tcc hello.c
 ```
 
+### Requirements
+- Ensure **nasm** is listed in environment PATH
+    + https://www.nasm.us
+
 ## Incremental steps
 
 ### Step 1. Integers
