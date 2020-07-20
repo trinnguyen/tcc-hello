@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #include "util.h"
 #include "external.h"
@@ -20,17 +22,19 @@ static char is_linux() {
 }
 
 bool translate_asm_to_obj(const char* src, const char* dst) {
-    const char *format = is_macos() ? "macho64" : (is_linux() ? "elf64" : NULL);
-    if (format == NULL)
-        return false;
-
-    char args[1024];
-    snprintf(args, 1024, "%s -f %s -o %s", src, format, dst);
-    return exec_cmd("nasm", args);
+    char buf[1024];
+    snprintf(buf, 1024, "-o %s %s", dst, src);
+    return exec_cmd("/usr/bin/as", buf);
 }
 
 bool link_object_lib_exec(const char* src, const char* dst) {
-    char args[1024];
-    snprintf(args, 1024, "%s -lc -o %s", src, dst);
-    return exec_cmd("/usr/bin/ld", args);
+    char *crt = getenv("TCC_RT_OBJ");
+    if (crt == NULL) {
+        error("Missing TCC_RT_OBJ environment variable\n");
+        return false;
+    }
+
+    char buf[1024];
+    snprintf(buf, 1024, "-static -o %s %s %s", dst, src, crt);
+    return exec_cmd("/usr/bin/ld", buf);
 }

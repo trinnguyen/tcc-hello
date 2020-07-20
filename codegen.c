@@ -4,8 +4,8 @@
 FILE *cfout;
 
 static void gen_header() {
-    fprintf(cfout, "    global  _main\n");
-    fprintf(cfout, "    section .text\n\n");
+    fprintf(cfout, ".text\n");
+    fprintf(cfout, ".intel_syntax noprefix\n");
 }
 
 static void gen_expr(node_expr expr) {
@@ -28,7 +28,9 @@ static void gen_stmt(node_stmt *stmt) {
 
 static void gen_func(node_func_decl *decl) {
     // labe;
-    fprintf(cfout, "_%s:\n", decl->name);
+    fprintf(cfout, ".global  %s\n", decl->name);
+    fprintf(cfout, "\n");
+    fprintf(cfout, "%s:\n", decl->name);
 
     // statement
     if (decl->func_stmts != NULL) {

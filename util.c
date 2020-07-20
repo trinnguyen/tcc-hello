@@ -42,21 +42,11 @@ bool get_full_path(char *buf, const char *cmd) {
     return false;
 }
 
-bool exec_cmd(const char *cmd, const char *args) {
-    char buf[1024];
-    if (cmd[0] == '/') {
-        strncpy(buf, cmd, sizeof(buf));
-    } else {
-        if (!get_full_path(buf, cmd)) {
-            fprintf(stderr, "Failed to find tool: %s", cmd);
-            return false;
-        }
-    }
-
+bool exec_cmd(const char *cmd, char *args) {
     char tmp[1024];
-    snprintf(tmp, 1024, "%s %s", buf, args);
+    snprintf(tmp, 1024, "%s %s", cmd, args);
     printf("Executing: %s\n", tmp);
-    FILE *f = popen(cmd, "r");
+    FILE *f = popen(tmp, "r");
     if (f != NULL) {
         int ret = fclose(f);
         return ret == 0;

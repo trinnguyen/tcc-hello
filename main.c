@@ -128,7 +128,7 @@ static bool exec_compiler(const char* filename, const char *output) {
     free_ast(ast);
 
     if (gen) {
-        printf("Generate assembly code from AST into: %s\n", asm_name);
+        printf("Generated assembly code from AST into: %s\n", asm_name);
     } else {
         error("Failed to generate ASM\n");
         return false;
@@ -141,7 +141,7 @@ static bool exec_compiler(const char* filename, const char *output) {
     char obj_fname[256];
     snprintf(obj_fname, 256, "%s.o", output);
     if (translate_asm_to_obj(asm_name, obj_fname)) {
-        printf("Translate assembly code to object code: '%s' using system assembler (as)\n", obj_fname);
+        printf("Translated assembly code to object code: '%s' using system assembler (as)\n", obj_fname);
     } else {
         error("Failed to translate assembly code using system assembler (as)\n");
         return false;
@@ -149,7 +149,7 @@ static bool exec_compiler(const char* filename, const char *output) {
 
     // linker
     if (link_object_lib_exec(obj_fname, output)) {
-        printf("Link object file to output: '%s' using system linker (ld)\n", output);
+        printf("Linked object file to output: '%s' using system linker (ld)\n", output);
     } else {    
         printf("Failed to link object file using system linker (ld)\n");
     }
