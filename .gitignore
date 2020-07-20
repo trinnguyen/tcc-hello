@@ -58,3 +58,4 @@ build
 # Custom
 *.s
 src-gen/
+bin/
