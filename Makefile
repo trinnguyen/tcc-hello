@@ -1,6 +1,6 @@
 tcc:
-	$(CC) -o bin/tcc *.c -v
+	$(CC) -o tcc *.c -v
 
 .PHONY : clean
 clean:
-	rm bin/tcc
+	rm tcc
