@@ -1,5 +1,5 @@
 # tcc
-Toy compiler for (subset) C, target x64 macOS and Linux
+Toy C compiler for (subset) C, target x64 Linux
 
 ## Overview
 
