@@ -14,8 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: make
+      working-directory: ./src-c
       run: make
     - uses: actions/upload-artifact@v2
+      working-directory: ./src-c
       with:
         name: tcc
         path: tcc
