@@ -1,0 +1,6 @@
+# tcc
+Experiment compilers for C in C, Kotlin and Rust
+
+- Support small set of language features
+- The compiler in C generates x64 assembly code and produce executable file on Linux
+- Used as learning exercise for Kotlin and Rust
