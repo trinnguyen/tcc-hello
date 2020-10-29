@@ -12,9 +12,6 @@ Toy C compiler for (subset) C, target x64 Linux
     + Invoke system linker (ld)
 - Generate executable file (machine code) for Linux/macOS
 - Usage of x64 assembly language (Intel syntax) and NASM assembler
-- Follow the methodology in paper "An Incremental Approach to Compiler Construction"
-- Use ANSI C grammar from the book ["C Programming Language, 2nd Edition"](https://www.pearson.com/us/higher-education/program/Kernighan-C-Programming-Language-2nd-Edition/PGM54487.html)
-- The compiler is developed in C
 
 
 ## Usage
